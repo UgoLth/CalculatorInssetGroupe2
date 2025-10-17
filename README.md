@@ -1,2 +1,1 @@
-#i ClculatorInsset
-#testiiiii
+Projet de mise en pratique Agile Scrum
