@@ -52,17 +52,83 @@ public class FieldVerifier {
      * @return true if valid, false if invalid
      */
     public static boolean isValidDecimal(Integer nbr) {
-        //Implement your code
-        return true;
+        if (nbr == null) {
+            return false;
+        }
+        return nbr >= 1 && nbr <= 2000;
     }
 
     public static boolean isValidRoman(String nbr) {
-        //Implement your code
+        if (nbr == null || nbr.trim().isEmpty()){
+            return false;
+        }
+        String romanPattern = "^[IVXLCDMivxlcdm]+$";
+        if (!nbr.matches(romanPattern)) {
+            return false;
+        }
+        
+        String roman = nbr.toUpperCase();
+        
+        if (roman.matches(".*IIII.*") || roman.matches(".*XXXX.*") || 
+            roman.matches(".*CCCC.*") || roman.matches(".*VV.*") || 
+            roman.matches(".*LL.*") || roman.matches(".*DD.*")) {
+            return false;
+        }
+        
+        if (roman.contains("IL") || roman.contains("IC") || roman.contains("ID") || roman.contains("IM") ||
+            roman.contains("VX") || roman.contains("VL") || roman.contains("VC") || roman.contains("VD") || roman.contains("VM") ||
+            roman.contains("XD") || roman.contains("XM") || roman.contains("LC") || roman.contains("LD") || roman.contains("LM") ||
+            roman.contains("DM")) {
+            return false;
+        }
+        
         return true;
     }
 
     public static boolean isValidDate(String date) {
-        //Implement your code
-        return true;
+        if (date == null || date.trim().isEmpty()){
+            return false;
+        }
+        String datePattern = "^\\d{1,2}/\\d{1,2}/\\d{4}$";
+        if (!date.matches(datePattern)) {
+            return false;
+        }
+        
+        try {
+            String[] parts = date.split("/");
+            int day = Integer.parseInt(parts[0]);
+            int month = Integer.parseInt(parts[1]);
+            int year = Integer.parseInt(parts[2]);
+            
+            // Validation des plages de dates
+            if (day < 1 || day > 31) {
+                return false;
+            }
+            if (month < 1 || month > 12) {
+                return false;
+            }
+            if (year < 1 || year > 3999) {
+                return false;
+            }
+            
+            // Validation des mois avec 30 jours
+            if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
+                return false;
+            }
+            if (month == 2) {
+                boolean isLeapYear = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+                if (isLeapYear && day > 29) {
+                    return false;
+                }
+                if (!isLeapYear && day > 28) {
+                    return false;
+                }
+            }
+            return true;
+        }catch (NumberFormatException e) {
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

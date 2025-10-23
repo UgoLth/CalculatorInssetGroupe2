@@ -18,8 +18,7 @@
                 <g:Label ui:field="errorLabelRToA" ></g:Label>
             </g:FlowPanel>
             <g:FlowPanel >
-                
-                <g:ResetButton ui:field="boutonClearR" text="Clear"/>
+
             </g:FlowPanel>
         </g:FlowPanel>
         <g:FlowPanel>
@@ -37,7 +36,6 @@
             </g:FlowPanel>
             <g:FlowPanel>
                 
-                <g:ResetButton ui:field="boutonClearA" text="Clear"/>
             </g:FlowPanel>
         </g:FlowPanel>
         <g:FlowPanel>
@@ -53,9 +51,8 @@
             <g:FlowPanel>
                 <g:Label ui:field="errorLabelD" ></g:Label>
             </g:FlowPanel>
-            <g:FlowPanel>
-                
-                <g:ResetButton ui:field="boutonClearD" text="Clear"/>
+            <g:FlowPanel styleName="clear-section"> 
+                <g:ResetButton ui:field="boutonClearAll" text="Tout Effacer"/>
             </g:FlowPanel>
         </g:FlowPanel>
       <!--</g:Form>-->

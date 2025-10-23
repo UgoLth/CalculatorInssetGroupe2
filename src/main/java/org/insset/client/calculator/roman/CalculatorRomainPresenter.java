@@ -29,15 +29,11 @@ import org.insset.shared.FieldVerifier;
 public class CalculatorRomainPresenter extends Composite {
 
     @UiField
-    public ResetButton boutonClearR;
-    @UiField
     public SubmitButton boutonConvertRToA;
-    @UiField
-    public ResetButton boutonClearA;
     @UiField
     public SubmitButton boutonConvertAToR;
     @UiField
-    public ResetButton boutonClearD;
+    public ResetButton boutonClearAll;
     @UiField
     public SubmitButton boutonConvertD;
     @UiField
@@ -75,11 +71,15 @@ public class CalculatorRomainPresenter extends Composite {
      * Init des handler
      */
     private void initHandler() {
-        boutonClearR.addClickHandler(new ClickHandler() {
+        boutonClearAll.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
                 valR.setText("");
+                valA.setText("");
+                valD.setText("");
                 errorLabelRToA.setText("");
+                errorLabelAToR.setText("");
+                errorLabelD.setText("");
             }
         });
         boutonConvertRToA.addClickHandler(new ClickHandler() {
@@ -89,26 +89,12 @@ public class CalculatorRomainPresenter extends Composite {
             }
 
         });
-        boutonClearA.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                valA.setText("");
-                errorLabelAToR.setText("");
-            }
-        });
         boutonConvertAToR.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
                 convertArabeToRoman();
             }
 
-        });
-        boutonClearD.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                valD.setText("");
-                errorLabelD.setText("");
-            }
         });
         boutonConvertD.addClickHandler(new ClickHandler() {
             @Override
