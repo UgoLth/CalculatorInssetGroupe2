@@ -65,6 +65,12 @@ public class CalculatorRomainPresenter extends Composite {
     public CalculatorRomainPresenter() {
         initWidget(ourUiBinder.createAndBindUi(this));
         initHandler();
+        initPlaceholders();
+    }
+    private void initPlaceholders() {
+        valR.getElement().setPropertyString("placeholder", "Nombre romain (ex: MCMXCIX)");
+        valA.getElement().setPropertyString("placeholder", "Nombre décimal (1–2000)");
+        valD.getElement().setPropertyString("placeholder", "Date JJ/MM/AAAA");
     }
 
     /**

@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+  <g:HTMLPanel>
+    <g:VerticalPanel spacing="8">
+      <g:HorizontalPanel spacing="8">
+        <g:Label text="Prix original (€) :" />
+        <g:TextBox ui:field="originalPrice" />
+      </g:HorizontalPanel>
+      
+      <g:HorizontalPanel spacing="8">
+        <g:Label text="Taux (%) :" />
+        <g:TextBox ui:field="discountRate" />
+      </g:HorizontalPanel>
+      
+      <g:HorizontalPanel spacing="8">
+        <g:SubmitButton ui:field="calculateButton" text="Calculer" />
+        <g:ResetButton ui:field="clearButton" text="Effacer" />
+      </g:HorizontalPanel>
+      
+      <g:Label ui:field="errorLabel" />
+    </g:VerticalPanel>
+  </g:HTMLPanel>
+</ui:UiBinder>

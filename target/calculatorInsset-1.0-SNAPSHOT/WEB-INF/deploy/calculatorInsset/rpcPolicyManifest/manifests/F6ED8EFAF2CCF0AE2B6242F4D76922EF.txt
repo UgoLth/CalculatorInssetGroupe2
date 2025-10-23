@@ -1,0 +1,2 @@
+serviceClass: org.insset.client.service.DiscountService
+path: 207C4A37139B2E3ABE6948E9E2D4FC37.gwt.rpc

@@ -1,4 +1,4 @@
-// .ui.xml template last modified: 1761238286000
+// .ui.xml template last modified: 1761249213000
 package org.insset.client.calculator.roman;
 
 import com.google.gwt.core.client.GWT;
@@ -240,7 +240,6 @@ public class CalculatorRomainPresenter_MainUiBinderImpl implements UiBinder<com.
       // Creation section.
       final com.google.gwt.user.client.ui.TextBox valR = (com.google.gwt.user.client.ui.TextBox) GWT.create(com.google.gwt.user.client.ui.TextBox.class);
       // Setup section.
-      valR.setText("Entrer une valeur");
 
       this.owner.valR = valR;
 
@@ -457,7 +456,6 @@ public class CalculatorRomainPresenter_MainUiBinderImpl implements UiBinder<com.
       // Creation section.
       final com.google.gwt.user.client.ui.TextBox valA = (com.google.gwt.user.client.ui.TextBox) GWT.create(com.google.gwt.user.client.ui.TextBox.class);
       // Setup section.
-      valA.setText("Entrer une valeur");
 
       this.owner.valA = valA;
 
@@ -674,7 +672,6 @@ public class CalculatorRomainPresenter_MainUiBinderImpl implements UiBinder<com.
       // Creation section.
       final com.google.gwt.user.client.ui.TextBox valD = (com.google.gwt.user.client.ui.TextBox) GWT.create(com.google.gwt.user.client.ui.TextBox.class);
       // Setup section.
-      valD.setText("Entrer une valeur");
 
       this.owner.valD = valD;
 

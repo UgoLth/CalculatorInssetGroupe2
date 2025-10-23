@@ -11,7 +11,7 @@
                 <g:Label>Quelle valeur voulez-vous convertir en decimal</g:Label>
             </g:FlowPanel>
             <g:FlowPanel>          
-              <g:TextBox ui:field="valR" text="Entrer une valeur"/>
+              <g:TextBox ui:field="valR"/>
               <g:SubmitButton ui:field="boutonConvertRToA" text="Convertir"/>
             </g:FlowPanel>
             <g:FlowPanel>
@@ -28,7 +28,7 @@
                 <g:Label>Quelle valeur voulez-vous convertir en chiffre romain</g:Label>
             </g:FlowPanel>
             <g:FlowPanel>          
-              <g:TextBox ui:field="valA" text="Entrer une valeur"/>
+              <g:TextBox ui:field="valA"/>
               <g:SubmitButton ui:field="boutonConvertAToR" text="Convertir"/>
             </g:FlowPanel>
             <g:FlowPanel>
@@ -45,7 +45,7 @@
                 <g:Label>Quelle date voulez-vous convertir?</g:Label>
             </g:FlowPanel>
             <g:FlowPanel>          
-              <g:TextBox ui:field="valD" text="Entrer une valeur"/>
+              <g:TextBox ui:field="valD"/>
               <g:SubmitButton ui:field="boutonConvertD" text="Convertir"/>
             </g:FlowPanel>
             <g:FlowPanel>
