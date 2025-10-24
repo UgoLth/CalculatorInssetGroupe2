@@ -1,4 +1,4 @@
-// .ui.xml template last modified: 1761246376000
+// .ui.xml template last modified: 1761296495000
 package org.insset.client.calculator.pourcentage;
 
 import com.google.gwt.core.client.GWT;
@@ -116,6 +116,7 @@ public class DiscountCalculatorPresenter_DiscountUiBinderImpl implements UiBinde
       f_VerticalPanel2.add(get_f_HorizontalPanel5());
       f_VerticalPanel2.add(get_f_HorizontalPanel7());
       f_VerticalPanel2.add(get_errorLabel());
+      f_VerticalPanel2.add(get_f_VerticalPanel8());
       f_VerticalPanel2.setSpacing(8);
 
       return f_VerticalPanel2;
@@ -282,6 +283,174 @@ public class DiscountCalculatorPresenter_DiscountUiBinderImpl implements UiBinde
       this.owner.errorLabel = errorLabel;
 
       return errorLabel;
+    }
+
+    /**
+     * Getter for f_VerticalPanel8 called 1 times. Type: DEFAULT. Build precedence: 3.
+     */
+    private com.google.gwt.user.client.ui.VerticalPanel get_f_VerticalPanel8() {
+      return build_f_VerticalPanel8();
+    }
+    private com.google.gwt.user.client.ui.VerticalPanel build_f_VerticalPanel8() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.VerticalPanel f_VerticalPanel8 = (com.google.gwt.user.client.ui.VerticalPanel) GWT.create(com.google.gwt.user.client.ui.VerticalPanel.class);
+      // Setup section.
+      f_VerticalPanel8.add(get_f_Label9());
+      f_VerticalPanel8.add(get_f_HorizontalPanel10());
+      f_VerticalPanel8.add(get_divisionResult());
+      f_VerticalPanel8.setSpacing(8);
+
+      return f_VerticalPanel8;
+    }
+
+    /**
+     * Getter for f_Label9 called 1 times. Type: DEFAULT. Build precedence: 4.
+     */
+    private com.google.gwt.user.client.ui.Label get_f_Label9() {
+      return build_f_Label9();
+    }
+    private com.google.gwt.user.client.ui.Label build_f_Label9() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.Label f_Label9 = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
+      // Setup section.
+      f_Label9.setText("Division de deux nombres entiers");
+
+      return f_Label9;
+    }
+
+    /**
+     * Getter for f_HorizontalPanel10 called 1 times. Type: DEFAULT. Build precedence: 4.
+     */
+    private com.google.gwt.user.client.ui.HorizontalPanel get_f_HorizontalPanel10() {
+      return build_f_HorizontalPanel10();
+    }
+    private com.google.gwt.user.client.ui.HorizontalPanel build_f_HorizontalPanel10() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.HorizontalPanel f_HorizontalPanel10 = (com.google.gwt.user.client.ui.HorizontalPanel) GWT.create(com.google.gwt.user.client.ui.HorizontalPanel.class);
+      // Setup section.
+      f_HorizontalPanel10.add(get_f_Label11());
+      f_HorizontalPanel10.add(get_divA());
+      f_HorizontalPanel10.add(get_f_Label12());
+      f_HorizontalPanel10.add(get_divB());
+      f_HorizontalPanel10.add(get_divideButton());
+      f_HorizontalPanel10.add(get_clearDivisionButton());
+      f_HorizontalPanel10.setSpacing(8);
+
+      return f_HorizontalPanel10;
+    }
+
+    /**
+     * Getter for f_Label11 called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.Label get_f_Label11() {
+      return build_f_Label11();
+    }
+    private com.google.gwt.user.client.ui.Label build_f_Label11() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.Label f_Label11 = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
+      // Setup section.
+      f_Label11.setText("A :");
+
+      return f_Label11;
+    }
+
+    /**
+     * Getter for divA called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.TextBox get_divA() {
+      return build_divA();
+    }
+    private com.google.gwt.user.client.ui.TextBox build_divA() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.TextBox divA = (com.google.gwt.user.client.ui.TextBox) GWT.create(com.google.gwt.user.client.ui.TextBox.class);
+      // Setup section.
+      divA.setWidth("60px");
+
+      this.owner.divA = divA;
+
+      return divA;
+    }
+
+    /**
+     * Getter for f_Label12 called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.Label get_f_Label12() {
+      return build_f_Label12();
+    }
+    private com.google.gwt.user.client.ui.Label build_f_Label12() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.Label f_Label12 = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
+      // Setup section.
+      f_Label12.setText("B :");
+
+      return f_Label12;
+    }
+
+    /**
+     * Getter for divB called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.TextBox get_divB() {
+      return build_divB();
+    }
+    private com.google.gwt.user.client.ui.TextBox build_divB() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.TextBox divB = (com.google.gwt.user.client.ui.TextBox) GWT.create(com.google.gwt.user.client.ui.TextBox.class);
+      // Setup section.
+      divB.setWidth("60px");
+
+      this.owner.divB = divB;
+
+      return divB;
+    }
+
+    /**
+     * Getter for divideButton called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.SubmitButton get_divideButton() {
+      return build_divideButton();
+    }
+    private com.google.gwt.user.client.ui.SubmitButton build_divideButton() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.SubmitButton divideButton = (com.google.gwt.user.client.ui.SubmitButton) GWT.create(com.google.gwt.user.client.ui.SubmitButton.class);
+      // Setup section.
+      divideButton.setText("Diviser");
+
+      this.owner.divideButton = divideButton;
+
+      return divideButton;
+    }
+
+    /**
+     * Getter for clearDivisionButton called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.ResetButton get_clearDivisionButton() {
+      return build_clearDivisionButton();
+    }
+    private com.google.gwt.user.client.ui.ResetButton build_clearDivisionButton() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.ResetButton clearDivisionButton = (com.google.gwt.user.client.ui.ResetButton) GWT.create(com.google.gwt.user.client.ui.ResetButton.class);
+      // Setup section.
+      clearDivisionButton.setText("Effacer");
+
+      this.owner.clearDivisionButton = clearDivisionButton;
+
+      return clearDivisionButton;
+    }
+
+    /**
+     * Getter for divisionResult called 1 times. Type: DEFAULT. Build precedence: 4.
+     */
+    private com.google.gwt.user.client.ui.Label get_divisionResult() {
+      return build_divisionResult();
+    }
+    private com.google.gwt.user.client.ui.Label build_divisionResult() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.Label divisionResult = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
+      // Setup section.
+
+      this.owner.divisionResult = divisionResult;
+
+      return divisionResult;
     }
 
     /**

@@ -38,6 +38,13 @@ public class DiscountCalculatorPresenter extends Composite {
     @UiField
     public Label errorLabel;
     
+    @UiField public TextBox divA;
+    @UiField public TextBox divB;
+    @UiField public SubmitButton divideButton;
+    @UiField public Label divisionResult;
+    @UiField public ResetButton clearDivisionButton;
+
+    
     private final DiscountServiceAsync service = GWT.create(DiscountService.class);
 
     interface DiscountUiBinder extends UiBinder<HTMLPanel, DiscountCalculatorPresenter> {
@@ -51,9 +58,11 @@ public class DiscountCalculatorPresenter extends Composite {
         initPlaceholders();
     }
     private void initPlaceholders() {
-    // on écrit l’attribut HTML5 sur l’élément DOM
     originalPrice.getElement().setPropertyString("placeholder", "Prix original (€)");
     discountRate.getElement().setPropertyString("placeholder", "Taux de remise (%)");
+    
+    divA.getElement().setPropertyString("placeholder", "Premier entier");
+    divB.getElement().setPropertyString("placeholder", "Deuxième entier");
     }
     
     private void initHandler() {
@@ -65,17 +74,34 @@ public class DiscountCalculatorPresenter extends Composite {
                 errorLabel.setText("");
             }
         });
+        
+        clearDivisionButton.addClickHandler(new ClickHandler() {  // <<--- NOUVEAU
+            @Override
+            public void onClick(ClickEvent event) {
+                divA.setText("");
+                divB.setText("");
+                divisionResult.setText("");
+                divisionResult.removeStyleName("serverResponseLabelError");
+            }
+        });
         calculateButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
                 calculateDiscount();
             }
         });
+        
+         divideButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                calculateDivision();
+            }
+        });
     }
     private void calculateDiscount() {
         errorLabel.setText("");
         
-        // Validation des prix
+
         Double price = null;
         try {
             price = Double.parseDouble(originalPrice.getText());
@@ -123,4 +149,44 @@ public class DiscountCalculatorPresenter extends Composite {
             }
         });
     }
+    private void calculateDivision() {
+
+        divisionResult.setText("");
+        divisionResult.removeStyleName("serverResponseLabelError");
+
+        Integer aVal;
+        Integer bVal;
+        
+        try {
+            aVal = Integer.parseInt(divA.getText());
+            bVal = Integer.parseInt(divB.getText());
+        } catch (NumberFormatException e) {
+            String err = "Erreur : valeurs non entières";
+            divisionResult.setText(err);
+            divisionResult.addStyleName("serverResponseLabelError");
+
+            return;
+        }
+    
+        if (bVal == 0) {
+            String err = "Erreur : division par 0 impossible";
+            divisionResult.setText(err);
+            divisionResult.addStyleName("serverResponseLabelError");
+
+            return;
+        }
+    
+        double res = (double) aVal / (double) bVal;
+        NumberFormat fmt = NumberFormat.getFormat("0.###");
+        String valeurFormatee = fmt.format(res);
+
+        divisionResult.setText("");
+        divisionResult.removeStyleName("serverResponseLabelError");
+    
+        String titre   = "Division de deux entiers";
+        String sousTit = aVal + " ÷ " + bVal;
+        String corps   = "Résultat : " + valeurFormatee;
+
+        new DialogBoxInssetPresenter(titre, sousTit, corps);
+    }     
 }

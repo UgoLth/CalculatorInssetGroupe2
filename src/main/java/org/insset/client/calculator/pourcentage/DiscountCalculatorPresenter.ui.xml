@@ -20,6 +20,22 @@
       </g:HorizontalPanel>
       
       <g:Label ui:field="errorLabel" />
+      
+      <g:VerticalPanel spacing="8">
+        <g:Label text="Division de deux nombres entiers" />
+
+        <g:HorizontalPanel spacing="8">
+          <g:Label text="A :" />
+          <g:TextBox ui:field="divA" width="60px" />
+          <g:Label text="B :" />
+          <g:TextBox ui:field="divB" width="60px" />
+          <g:SubmitButton ui:field="divideButton" text="Diviser" />
+          <g:ResetButton ui:field="clearDivisionButton" text="Effacer" />
+        </g:HorizontalPanel>
+
+        <g:Label ui:field="divisionResult" />
+        
+      </g:VerticalPanel>
     </g:VerticalPanel>
   </g:HTMLPanel>
 </ui:UiBinder>

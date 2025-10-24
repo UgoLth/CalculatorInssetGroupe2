@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+
 /**
  *
  * @author insset
@@ -51,5 +52,28 @@ public class DiscountServiceImplIT {
     @Test(expected = IllegalArgumentException.class)
     public void taux_superieur_100() {
         new DiscountServiceImpl().calculateDiscount(100.0, 101);
+    }
+    
+    @Test
+    public void division_simple_entiers() {
+        double res = org.insset.shared.MathUtils.divideInts(10, 2);
+        assertEquals(5.0, res, 1e-9);
+    }
+
+    @Test
+    public void division_non_entière() {
+        double res = org.insset.shared.MathUtils.divideInts(7, 2);
+        assertEquals(3.5, res, 1e-9);
+    }
+    
+    @Test
+    public void division_negative() {
+        double res = org.insset.shared.MathUtils.divideInts(-9, 3);
+        assertEquals(-3.0, res, 1e-9);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void division_par_zero_declenche_exception() {
+        org.insset.shared.MathUtils.divideInts(12, 0);
     }
 }
