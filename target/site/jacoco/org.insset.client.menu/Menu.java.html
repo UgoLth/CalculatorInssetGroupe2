@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Menu.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calculatorInsset</a> &gt; <a href="index.source.html" class="el_package">org.insset.client.menu</a> &gt; <span class="el_source">Menu.java</span></div><h1>Menu.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.insset.client.menu;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.MenuItem;
+
+/**
+ *
+ * @author user
+ */
+public class Menu extends Composite {
+
+    //CHECKSTYLE:OFF
+    /**
+     * Menu : accueil
+     */
+    @UiField
+    public MenuItem accueil;
+    /**
+     * Menu : accueil
+     */
+    @UiField
+    public MenuItem pourcentage;
+    /**
+     * Menu : accueil
+     */
+    @UiField
+    public MenuItem romain;
+
+    interface MenuUiBinder extends UiBinder&lt;HTMLPanel, Menu&gt; {
+    }
+
+<span class="nc" id="L43">    private static MenuUiBinder ourUiBinder = GWT.create(MenuUiBinder.class);</span>
+
+<span class="nc" id="L45">    public Menu() {</span>
+<span class="nc" id="L46">        initWidget(ourUiBinder.createAndBindUi(this));</span>
+<span class="nc" id="L47">        initEditor();</span>
+<span class="nc" id="L48">    }</span>
+
+    private void initEditor() {
+<span class="nc" id="L51">        accueil.setScheduledCommand(new Scheduler.ScheduledCommand() {</span>
+
+            @Override
+            public void execute() {
+
+<span class="nc" id="L56">                History.newItem(&quot;exemple&quot;, true);</span>
+<span class="nc" id="L57">            }</span>
+        });
+<span class="nc" id="L59">        pourcentage.setScheduledCommand(new Scheduler.ScheduledCommand() {</span>
+
+            @Override
+            public void execute() {
+
+<span class="nc" id="L64">                History.newItem(&quot;pourcentage&quot;, true);</span>
+<span class="nc" id="L65">            }</span>
+        });
+<span class="nc" id="L67">        romain.setScheduledCommand(new Scheduler.ScheduledCommand() {</span>
+
+            @Override
+            public void execute() {
+
+<span class="nc" id="L72">                History.newItem(&quot;roman&quot;, true);</span>
+<span class="nc" id="L73">            }</span>
+        });
+<span class="nc" id="L75">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

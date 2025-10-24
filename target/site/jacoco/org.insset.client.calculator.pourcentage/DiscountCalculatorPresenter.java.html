@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DiscountCalculatorPresenter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calculatorInsset</a> &gt; <a href="index.source.html" class="el_package">org.insset.client.calculator.pourcentage</a> &gt; <span class="el_source">DiscountCalculatorPresenter.java</span></div><h1>DiscountCalculatorPresenter.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.insset.client.calculator.pourcentage;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ResetButton;
+import com.google.gwt.user.client.ui.SubmitButton;
+import com.google.gwt.user.client.ui.TextBox;
+import org.insset.client.message.dialogbox.DialogBoxInssetPresenter;
+import org.insset.client.service.DiscountService;
+import org.insset.client.service.DiscountServiceAsync;
+import com.google.gwt.i18n.client.NumberFormat;
+/**
+ *
+ * @author insset
+ */
+public class DiscountCalculatorPresenter extends Composite {
+    
+    @UiField
+    public TextBox originalPrice;
+    @UiField
+    public TextBox discountRate;
+    @UiField
+    public SubmitButton calculateButton;
+    @UiField
+    public ResetButton clearButton;
+    @UiField
+    public Label errorLabel;
+    
+    @UiField public TextBox divA;
+    @UiField public TextBox divB;
+    @UiField public SubmitButton divideButton;
+    @UiField public Label divisionResult;
+    @UiField public ResetButton clearDivisionButton;
+
+    
+<span class="nc" id="L48">    private final DiscountServiceAsync service = GWT.create(DiscountService.class);</span>
+
+    interface DiscountUiBinder extends UiBinder&lt;HTMLPanel, DiscountCalculatorPresenter&gt; {
+    }
+    
+<span class="nc" id="L53">    private static DiscountUiBinder ourUiBinder = GWT.create(DiscountUiBinder.class);</span>
+
+<span class="nc" id="L55">    public DiscountCalculatorPresenter() {</span>
+<span class="nc" id="L56">        initWidget(ourUiBinder.createAndBindUi(this));</span>
+<span class="nc" id="L57">        initHandler();</span>
+<span class="nc" id="L58">        initPlaceholders();</span>
+<span class="nc" id="L59">    }</span>
+    private void initPlaceholders() {
+<span class="nc" id="L61">    originalPrice.getElement().setPropertyString(&quot;placeholder&quot;, &quot;Prix original (€)&quot;);</span>
+<span class="nc" id="L62">    discountRate.getElement().setPropertyString(&quot;placeholder&quot;, &quot;Taux de remise (%)&quot;);</span>
+    
+<span class="nc" id="L64">    divA.getElement().setPropertyString(&quot;placeholder&quot;, &quot;Premier entier&quot;);</span>
+<span class="nc" id="L65">    divB.getElement().setPropertyString(&quot;placeholder&quot;, &quot;Deuxième entier&quot;);</span>
+<span class="nc" id="L66">    }</span>
+    
+    private void initHandler() {
+<span class="nc" id="L69">        clearButton.addClickHandler(new ClickHandler() {</span>
+            @Override
+            public void onClick(ClickEvent event) {
+<span class="nc" id="L72">                originalPrice.setText(&quot;&quot;);</span>
+<span class="nc" id="L73">                discountRate.setText(&quot;&quot;);</span>
+<span class="nc" id="L74">                errorLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L75">            }</span>
+        });
+        
+<span class="nc" id="L78">        clearDivisionButton.addClickHandler(new ClickHandler() {  // &lt;&lt;--- NOUVEAU</span>
+            @Override
+            public void onClick(ClickEvent event) {
+<span class="nc" id="L81">                divA.setText(&quot;&quot;);</span>
+<span class="nc" id="L82">                divB.setText(&quot;&quot;);</span>
+<span class="nc" id="L83">                divisionResult.setText(&quot;&quot;);</span>
+<span class="nc" id="L84">                divisionResult.removeStyleName(&quot;serverResponseLabelError&quot;);</span>
+<span class="nc" id="L85">            }</span>
+        });
+<span class="nc" id="L87">        calculateButton.addClickHandler(new ClickHandler() {</span>
+            @Override
+            public void onClick(ClickEvent event) {
+<span class="nc" id="L90">                calculateDiscount();</span>
+<span class="nc" id="L91">            }</span>
+        });
+        
+<span class="nc" id="L94">         divideButton.addClickHandler(new ClickHandler() {</span>
+            @Override
+            public void onClick(ClickEvent event) {
+<span class="nc" id="L97">                calculateDivision();</span>
+<span class="nc" id="L98">            }</span>
+        });
+<span class="nc" id="L100">    }</span>
+    private void calculateDiscount() {
+<span class="nc" id="L102">        errorLabel.setText(&quot;&quot;);</span>
+        
+
+<span class="nc" id="L105">        Double price = null;</span>
+        try {
+<span class="nc" id="L107">            price = Double.parseDouble(originalPrice.getText());</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">            if (price &lt;= 0) {</span>
+<span class="nc" id="L109">                throw new NumberFormatException();</span>
+            }
+<span class="nc" id="L111">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L112">            errorLabel.addStyleName(&quot;serverResponseLabelError&quot;);</span>
+<span class="nc" id="L113">            errorLabel.setText(&quot;Prix invalide (doit etre &gt; 0)&quot;);</span>
+<span class="nc" id="L114">            return;</span>
+<span class="nc" id="L115">        }</span>
+        
+<span class="nc" id="L117">        Integer rate = null;</span>
+        try {
+<span class="nc" id="L119">            rate = Integer.parseInt(discountRate.getText());</span>
+<span class="nc bnc" id="L120" title="All 4 branches missed.">            if (rate &lt; 0 || rate &gt; 100) {</span>
+<span class="nc" id="L121">                throw new NumberFormatException();</span>
+            }
+<span class="nc" id="L123">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L124">            errorLabel.addStyleName(&quot;serverResponseLabelError&quot;);</span>
+<span class="nc" id="L125">            errorLabel.setText(&quot;Taux invalide (0-100%)&quot;);</span>
+<span class="nc" id="L126">            return;</span>
+<span class="nc" id="L127">        }</span>
+<span class="nc" id="L128">        final Double priceVal = price;</span>
+<span class="nc" id="L129">        final Integer rateVal = rate;</span>
+        
+<span class="nc" id="L131">        service.calculateDiscount(price, rate, new AsyncCallback&lt;Double[]&gt;() {</span>
+            public void onFailure(Throwable caught) {
+<span class="nc" id="L133">                errorLabel.addStyleName(&quot;serverResponseLabelError&quot;);</span>
+<span class="nc" id="L134">                errorLabel.setText(&quot;Erreur serveur: &quot; + caught.getMessage());</span>
+<span class="nc" id="L135">            }</span>
+            public void onSuccess(Double[] result) {
+<span class="nc" id="L137">                NumberFormat money = NumberFormat.getFormat(&quot;0.00&quot;);</span>
+
+<span class="nc" id="L139">                String message =</span>
+<span class="nc" id="L140">                    &quot;Prix original: &quot; + money.format(priceVal) + &quot;€\n&quot; +</span>
+<span class="nc" id="L141">                    &quot;Montant remise: &quot; + money.format(result[0]) + &quot;€\n&quot; +</span>
+<span class="nc" id="L142">                    &quot;Prix final: &quot;   + money.format(result[1]) + &quot;€&quot;;</span>
+
+<span class="nc" id="L144">                new DialogBoxInssetPresenter(</span>
+                    &quot;Calcul de remise&quot;,
+<span class="nc" id="L146">                    &quot;Prix: &quot; + money.format(priceVal) + &quot;€, Remise: &quot; + rateVal + &quot;%&quot;,</span>
+                    message
+                );
+<span class="nc" id="L149">            }</span>
+        });
+<span class="nc" id="L151">    }</span>
+    private void calculateDivision() {
+
+<span class="nc" id="L154">        divisionResult.setText(&quot;&quot;);</span>
+<span class="nc" id="L155">        divisionResult.removeStyleName(&quot;serverResponseLabelError&quot;);</span>
+
+        Integer aVal;
+        Integer bVal;
+        
+        try {
+<span class="nc" id="L161">            aVal = Integer.parseInt(divA.getText());</span>
+<span class="nc" id="L162">            bVal = Integer.parseInt(divB.getText());</span>
+<span class="nc" id="L163">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L164">            String err = &quot;Erreur : valeurs non entières&quot;;</span>
+<span class="nc" id="L165">            divisionResult.setText(err);</span>
+<span class="nc" id="L166">            divisionResult.addStyleName(&quot;serverResponseLabelError&quot;);</span>
+
+<span class="nc" id="L168">            return;</span>
+<span class="nc" id="L169">        }</span>
+    
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (bVal == 0) {</span>
+<span class="nc" id="L172">            String err = &quot;Erreur : division par 0 impossible&quot;;</span>
+<span class="nc" id="L173">            divisionResult.setText(err);</span>
+<span class="nc" id="L174">            divisionResult.addStyleName(&quot;serverResponseLabelError&quot;);</span>
+
+<span class="nc" id="L176">            return;</span>
+        }
+    
+<span class="nc" id="L179">        double res = (double) aVal / (double) bVal;</span>
+<span class="nc" id="L180">        NumberFormat fmt = NumberFormat.getFormat(&quot;0.###&quot;);</span>
+<span class="nc" id="L181">        String valeurFormatee = fmt.format(res);</span>
+
+<span class="nc" id="L183">        divisionResult.setText(&quot;&quot;);</span>
+<span class="nc" id="L184">        divisionResult.removeStyleName(&quot;serverResponseLabelError&quot;);</span>
+    
+<span class="nc" id="L186">        String titre   = &quot;Division de deux entiers&quot;;</span>
+<span class="nc" id="L187">        String sousTit = aVal + &quot; ÷ &quot; + bVal;</span>
+<span class="nc" id="L188">        String corps   = &quot;Résultat : &quot; + valeurFormatee;</span>
+
+<span class="nc" id="L190">        new DialogBoxInssetPresenter(titre, sousTit, corps);</span>
+<span class="nc" id="L191">    }     </span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

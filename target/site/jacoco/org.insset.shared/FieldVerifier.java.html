@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FieldVerifier.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calculatorInsset</a> &gt; <a href="index.source.html" class="el_package">org.insset.shared</a> &gt; <span class="el_source">FieldVerifier.java</span></div><h1>FieldVerifier.java</h1><pre class="source lang-java linenums">package org.insset.shared;
+
+/**
+ * &lt;p&gt;
+ * FieldVerifier validates that the name the user enters is valid.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * This class is in the &lt;code&gt;shared&lt;/code&gt; packing because we use it in both
+ * the client code and on the server. On the client, we verify that the name is
+ * valid before sending an RPC request so the user doesn't have to wait for a
+ * network round trip to get feedback. On the server, we verify that the name is
+ * correct to ensure that the input is correct regardless of where the RPC
+ * originates.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * When creating a class that is used on both the client and the server, be sure
+ * that all code is translatable and does not use native JavaScript. Code that
+ * is note translatable (such as code that interacts with a database or the file
+ * system) cannot be compiled into client side JavaScript. Code that uses native
+ * JavaScript (such as Widgets) cannot be run on the server.
+ * &lt;/p&gt;
+ */
+<span class="nc" id="L23">public class FieldVerifier {</span>
+
+    /**
+     * Verifies that the specified name is valid for our service.
+     *
+     * In this example, we only require that the name is at least four
+     * characters. In your application, you can use more complex checks to
+     * ensure that usernames, passwords, email addresses, URLs, and other fields
+     * have the proper syntax.
+     *
+     * @param name the name to validate
+     * @return true if valid, false if invalid
+     */
+    public static boolean isValidName(String name) {
+<span class="nc bnc" id="L37" title="All 4 branches missed.">        if ((name == null) || (name.isEmpty())) {</span>
+<span class="nc" id="L38">            return false;</span>
+        }
+<span class="nc" id="L40">        return true;</span>
+    }
+
+    /**
+     * Verifies that the specified value is valide.
+     *
+     * In this example, we only require that the name is at least four
+     * characters. In your application, you can use more complex checks to
+     * ensure that usernames, passwords, email addresses, URLs, and other fields
+     * have the proper syntax.
+     *
+     * @param name the name to validate
+     * @return true if valid, false if invalid
+     */
+    public static boolean isValidDecimal(Integer nbr) {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (nbr == null) {</span>
+<span class="nc" id="L56">            return false;</span>
+        }
+<span class="nc bnc" id="L58" title="All 4 branches missed.">        return nbr &gt;= 1 &amp;&amp; nbr &lt;= 2000;</span>
+    }
+
+    public static boolean isValidRoman(String nbr) {
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">        if (nbr == null || nbr.trim().isEmpty()){</span>
+<span class="fc" id="L63">            return false;</span>
+        }
+<span class="fc" id="L65">        String romanPattern = &quot;^[IVXLCDMivxlcdm]+$&quot;;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (!nbr.matches(romanPattern)) {</span>
+<span class="fc" id="L67">            return false;</span>
+        }
+        
+<span class="fc" id="L70">        String roman = nbr.toUpperCase();</span>
+        
+<span class="pc bpc" id="L72" title="1 of 4 branches missed.">        if (roman.matches(&quot;.*IIII.*&quot;) || roman.matches(&quot;.*XXXX.*&quot;) || </span>
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">            roman.matches(&quot;.*CCCC.*&quot;) || roman.matches(&quot;.*VV.*&quot;) || </span>
+<span class="pc bpc" id="L74" title="2 of 4 branches missed.">            roman.matches(&quot;.*LL.*&quot;) || roman.matches(&quot;.*DD.*&quot;)) {</span>
+<span class="fc" id="L75">            return false;</span>
+        }
+        
+<span class="pc bpc" id="L78" title="4 of 8 branches missed.">        if (roman.contains(&quot;IL&quot;) || roman.contains(&quot;IC&quot;) || roman.contains(&quot;ID&quot;) || roman.contains(&quot;IM&quot;) ||</span>
+<span class="pc bpc" id="L79" title="5 of 10 branches missed.">            roman.contains(&quot;VX&quot;) || roman.contains(&quot;VL&quot;) || roman.contains(&quot;VC&quot;) || roman.contains(&quot;VD&quot;) || roman.contains(&quot;VM&quot;) ||</span>
+<span class="pc bpc" id="L80" title="5 of 10 branches missed.">            roman.contains(&quot;XD&quot;) || roman.contains(&quot;XM&quot;) || roman.contains(&quot;LC&quot;) || roman.contains(&quot;LD&quot;) || roman.contains(&quot;LM&quot;) ||</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">            roman.contains(&quot;DM&quot;)) {</span>
+<span class="nc" id="L82">            return false;</span>
+        }
+        
+<span class="fc" id="L85">        return true;</span>
+    }
+
+    public static boolean isValidDate(String date) {
+<span class="pc bpc" id="L89" title="1 of 4 branches missed.">        if (date == null || date.trim().isEmpty()){</span>
+<span class="fc" id="L90">            return false;</span>
+        }
+<span class="fc" id="L92">        String datePattern = &quot;^\\d{1,2}/\\d{1,2}/\\d{4}$&quot;;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (!date.matches(datePattern)) {</span>
+<span class="fc" id="L94">            return false;</span>
+        }
+        
+        try {
+<span class="fc" id="L98">            String[] parts = date.split(&quot;/&quot;);</span>
+<span class="fc" id="L99">            int day = Integer.parseInt(parts[0]);</span>
+<span class="fc" id="L100">            int month = Integer.parseInt(parts[1]);</span>
+<span class="fc" id="L101">            int year = Integer.parseInt(parts[2]);</span>
+            
+            // Validation des plages de dates
+<span class="pc bpc" id="L104" title="1 of 4 branches missed.">            if (day &lt; 1 || day &gt; 31) {</span>
+<span class="fc" id="L105">                return false;</span>
+            }
+<span class="pc bpc" id="L107" title="2 of 4 branches missed.">            if (month &lt; 1 || month &gt; 12) {</span>
+<span class="nc" id="L108">                return false;</span>
+            }
+<span class="pc bpc" id="L110" title="2 of 4 branches missed.">            if (year &lt; 1 || year &gt; 3999) {</span>
+<span class="nc" id="L111">                return false;</span>
+            }
+            
+            // Validation des mois avec 30 jours
+<span class="pc bpc" id="L115" title="6 of 10 branches missed.">            if ((month == 4 || month == 6 || month == 9 || month == 11) &amp;&amp; day &gt; 30) {</span>
+<span class="nc" id="L116">                return false;</span>
+            }
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">            if (month == 2) {</span>
+<span class="nc bnc" id="L119" title="All 6 branches missed.">                boolean isLeapYear = (year % 4 == 0 &amp;&amp; (year % 100 != 0 || year % 400 == 0));</span>
+<span class="nc bnc" id="L120" title="All 4 branches missed.">                if (isLeapYear &amp;&amp; day &gt; 29) {</span>
+<span class="nc" id="L121">                    return false;</span>
+                }
+<span class="nc bnc" id="L123" title="All 4 branches missed.">                if (!isLeapYear &amp;&amp; day &gt; 28) {</span>
+<span class="nc" id="L124">                    return false;</span>
+                }
+            }
+<span class="fc" id="L127">            return true;</span>
+<span class="nc" id="L128">        }catch (NumberFormatException e) {</span>
+<span class="nc" id="L129">            return false;</span>
+<span class="nc" id="L130">        } catch (Exception e) {</span>
+<span class="nc" id="L131">            return false;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

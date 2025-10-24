@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DialogBoxInssetPresenter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calculatorInsset</a> &gt; <a href="index.source.html" class="el_package">org.insset.client.message.dialogbox</a> &gt; <span class="el_source">DialogBoxInssetPresenter.java</span></div><h1>DialogBoxInssetPresenter.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.insset.client.message.dialogbox;
+
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
+
+/**
+ *
+ * @author user
+ */
+public class DialogBoxInssetPresenter extends DialogBox {
+
+    public DialogBoxInssetPresenter(String titre, String demande, String reponse) {
+<span class="nc" id="L23">        super();</span>
+<span class="nc" id="L24">        this.setText(titre);</span>
+<span class="nc" id="L25">        formateBox(demande, reponse);</span>
+<span class="nc" id="L26">    }</span>
+
+    private void formateBox(String demande, String reponse) {
+
+//         Create the popup dialog box
+<span class="nc" id="L31">        setAnimationEnabled(true);</span>
+<span class="nc" id="L32">        final Button closeButton = new Button(&quot;Close&quot;);</span>
+        // We can set the id of a widget by accessing its Element
+<span class="nc" id="L34">        closeButton.getElement().setId(&quot;closeButton&quot;);</span>
+
+        //Add a handler to close the DialogBox
+<span class="nc" id="L37">        closeButton.addClickHandler(new ClickHandler() {</span>
+            public void onClick(ClickEvent event) {
+<span class="nc" id="L39">                hide();</span>
+<span class="nc" id="L40">            }</span>
+        });
+
+<span class="nc" id="L43">        final Label textToServerLabel = new Label(demande);</span>
+<span class="nc" id="L44">        final HTML serverResponseLabel = new HTML(reponse);</span>
+<span class="nc" id="L45">        VerticalPanel dialogVPanel = new VerticalPanel();</span>
+<span class="nc" id="L46">        dialogVPanel.addStyleName(&quot;dialogVPanel&quot;);</span>
+<span class="nc" id="L47">        dialogVPanel.add(new HTML(&quot;&lt;b&gt;Demande envoyé au server :&lt;/b&gt;&quot;));</span>
+<span class="nc" id="L48">        dialogVPanel.add(textToServerLabel);</span>
+<span class="nc" id="L49">        dialogVPanel.add(new HTML(&quot;&lt;br&gt;&lt;b&gt;Reponse :&lt;/b&gt;&quot;));</span>
+<span class="nc" id="L50">        dialogVPanel.add(serverResponseLabel);</span>
+<span class="nc" id="L51">        dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);</span>
+<span class="nc" id="L52">        dialogVPanel.add(closeButton);</span>
+<span class="nc" id="L53">        setWidget(dialogVPanel);</span>
+<span class="nc" id="L54">        center();</span>
+<span class="nc" id="L55">        closeButton.setFocus(true);</span>
+<span class="nc" id="L56">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

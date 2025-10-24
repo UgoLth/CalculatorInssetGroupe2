@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CalculatorRomainPresenter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calculatorInsset</a> &gt; <a href="index.source.html" class="el_package">org.insset.client.calculator.roman</a> &gt; <span class="el_source">CalculatorRomainPresenter.java</span></div><h1>CalculatorRomainPresenter.java</h1><pre class="source lang-java linenums">package org.insset.client.calculator.roman;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ResetButton;
+import com.google.gwt.user.client.ui.SubmitButton;
+import com.google.gwt.user.client.ui.TextBox;
+import org.insset.client.message.dialogbox.DialogBoxInssetPresenter;
+import org.insset.client.service.RomanConverterService;
+import org.insset.client.service.RomanConverterServiceAsync;
+import org.insset.shared.FieldVerifier;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author talend
+ */
+public class CalculatorRomainPresenter extends Composite {
+
+    @UiField
+    public SubmitButton boutonConvertRToA;
+    @UiField
+    public SubmitButton boutonConvertAToR;
+    @UiField
+    public ResetButton boutonClearAll;
+    @UiField
+    public SubmitButton boutonConvertD;
+    @UiField
+    public TextBox valR;
+    @UiField
+    public TextBox valA;
+    @UiField
+    public TextBox valD;
+    @UiField
+    public Label errorLabelRToA;
+    @UiField
+    public Label errorLabelAToR;
+    @UiField
+    public Label errorLabelD;
+
+    interface MainUiBinder extends UiBinder&lt;HTMLPanel, CalculatorRomainPresenter&gt; {
+    }
+
+<span class="nc" id="L55">    private static MainUiBinder ourUiBinder = GWT.create(MainUiBinder.class);</span>
+    /**
+     * Create a remote service proxy to talk to the server-side Greeting
+     * service.
+     */
+<span class="nc" id="L60">    private final RomanConverterServiceAsync service = GWT.create(RomanConverterService.class);</span>
+
+    /**
+     * Constructeur
+     */
+<span class="nc" id="L65">    public CalculatorRomainPresenter() {</span>
+<span class="nc" id="L66">        initWidget(ourUiBinder.createAndBindUi(this));</span>
+<span class="nc" id="L67">        initHandler();</span>
+<span class="nc" id="L68">        initPlaceholders();</span>
+<span class="nc" id="L69">    }</span>
+    private void initPlaceholders() {
+<span class="nc" id="L71">        valR.getElement().setPropertyString(&quot;placeholder&quot;, &quot;Nombre romain (ex: MCMXCIX)&quot;);</span>
+<span class="nc" id="L72">        valA.getElement().setPropertyString(&quot;placeholder&quot;, &quot;Nombre décimal (1–2000)&quot;);</span>
+<span class="nc" id="L73">        valD.getElement().setPropertyString(&quot;placeholder&quot;, &quot;Date JJ/MM/AAAA&quot;);</span>
+<span class="nc" id="L74">    }</span>
+
+    /**
+     * Init des handler
+     */
+    private void initHandler() {
+<span class="nc" id="L80">        boutonClearAll.addClickHandler(new ClickHandler() {</span>
+            @Override
+            public void onClick(ClickEvent event) {
+<span class="nc" id="L83">                valR.setText(&quot;&quot;);</span>
+<span class="nc" id="L84">                valA.setText(&quot;&quot;);</span>
+<span class="nc" id="L85">                valD.setText(&quot;&quot;);</span>
+<span class="nc" id="L86">                errorLabelRToA.setText(&quot;&quot;);</span>
+<span class="nc" id="L87">                errorLabelAToR.setText(&quot;&quot;);</span>
+<span class="nc" id="L88">                errorLabelD.setText(&quot;&quot;);</span>
+<span class="nc" id="L89">            }</span>
+        });
+<span class="nc" id="L91">        boutonConvertRToA.addClickHandler(new ClickHandler() {</span>
+            @Override
+            public void onClick(ClickEvent event) {
+<span class="nc" id="L94">                convertRomanToArabe();</span>
+<span class="nc" id="L95">            }</span>
+
+        });
+<span class="nc" id="L98">        boutonConvertAToR.addClickHandler(new ClickHandler() {</span>
+            @Override
+            public void onClick(ClickEvent event) {
+<span class="nc" id="L101">                convertArabeToRoman();</span>
+<span class="nc" id="L102">            }</span>
+
+        });
+<span class="nc" id="L105">        boutonConvertD.addClickHandler(new ClickHandler() {</span>
+            @Override
+            public void onClick(ClickEvent event) {
+<span class="nc" id="L108">                convertDate();</span>
+<span class="nc" id="L109">            }</span>
+
+        });
+<span class="nc" id="L112">    }</span>
+
+    /**
+     * call server
+     */
+    private void convertRomanToArabe() {
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (!FieldVerifier.isValidRoman(valR.getText())) {</span>
+<span class="nc" id="L119">            errorLabelRToA.addStyleName(&quot;serverResponseLabelError&quot;);</span>
+<span class="nc" id="L120">            errorLabelRToA.setText(&quot;Format incorect&quot;);</span>
+<span class="nc" id="L121">            return;</span>
+        }
+<span class="nc" id="L123">        service.convertRomanToArabe(valR.getText(), new AsyncCallback&lt;Integer&gt;() {</span>
+            public void onFailure(Throwable caught) {
+                // Show the RPC error message to the user
+//                Window.alert(SERVER_ERROR);
+<span class="nc" id="L127">            }</span>
+
+            public void onSuccess(Integer result) {
+<span class="nc" id="L130">                errorLabelRToA.setText(&quot; &quot;);</span>
+<span class="nc" id="L131">                new DialogBoxInssetPresenter(&quot;Convertion Roman to arabe&quot;, valR.getText(), String.valueOf(result));</span>
+<span class="nc" id="L132">            }</span>
+        });
+<span class="nc" id="L134">    }</span>
+
+    /**
+     * call server
+     */
+    private void convertArabeToRoman() {
+<span class="nc" id="L140">        Integer value = null;</span>
+        try {
+<span class="nc" id="L142">            value = Integer.parseInt(valA.getText());</span>
+<span class="nc" id="L143">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L144">            errorLabelAToR.addStyleName(&quot;serverResponseLabelError&quot;);</span>
+<span class="nc" id="L145">            errorLabelAToR.setText(&quot;Format incorect&quot;);</span>
+<span class="nc" id="L146">            return;</span>
+<span class="nc" id="L147">        }</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        if (!FieldVerifier.isValidDecimal(value)) {</span>
+<span class="nc" id="L149">            errorLabelAToR.addStyleName(&quot;serverResponseLabelError&quot;);</span>
+<span class="nc" id="L150">            errorLabelAToR.setText(&quot;Format incorect&quot;);</span>
+<span class="nc" id="L151">            return;</span>
+        }
+<span class="nc" id="L153">        service.convertArabeToRoman(Integer.parseInt(valA.getText()), new AsyncCallback&lt;String&gt;() {</span>
+            public void onFailure(Throwable caught) {
+                // Show the RPC error message to the user
+<span class="nc" id="L156">            }</span>
+
+            public void onSuccess(String result) {
+<span class="nc" id="L159">                errorLabelAToR.setText(&quot; &quot;);</span>
+<span class="nc" id="L160">                new DialogBoxInssetPresenter(&quot;Convertion Arabe to Roman&quot;, valA.getText(), result);</span>
+<span class="nc" id="L161">            }</span>
+        });
+<span class="nc" id="L163">    }</span>
+
+    /**
+     * call server
+     */
+    private void convertDate() {
+        //Verif
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        if (!FieldVerifier.isValidDate(valD.getText())) {</span>
+<span class="nc" id="L171">            errorLabelAToR.addStyleName(&quot;serverResponseLabelError&quot;);</span>
+<span class="nc" id="L172">            errorLabelAToR.setText(&quot;Format incorect&quot;);</span>
+<span class="nc" id="L173">            return;</span>
+        }
+        //call server
+<span class="nc" id="L176">        service.convertDateYears(valD.getText(), new AsyncCallback&lt;String&gt;() {</span>
+            public void onFailure(Throwable caught) {
+                // Show the RPC error message to the user
+//                Window.alert(SERVER_ERROR);
+<span class="nc" id="L180">            }</span>
+
+            public void onSuccess(String result) {
+<span class="nc" id="L183">                errorLabelD.setText(&quot; &quot;);</span>
+<span class="nc" id="L184">                new DialogBoxInssetPresenter(&quot;Convertion Date&quot;, valD.getText(), result);</span>
+<span class="nc" id="L185">            }</span>
+        });
+<span class="nc" id="L187">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

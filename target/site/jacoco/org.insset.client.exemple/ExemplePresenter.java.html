@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ExemplePresenter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calculatorInsset</a> &gt; <a href="index.source.html" class="el_package">org.insset.client.exemple</a> &gt; <span class="el_source">ExemplePresenter.java</span></div><h1>ExemplePresenter.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.insset.client.exemple;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ResetButton;
+import com.google.gwt.user.client.ui.SubmitButton;
+import com.google.gwt.user.client.ui.TextBox;
+import org.insset.client.message.Messages;
+import org.insset.client.message.dialogbox.DialogBoxInssetPresenter;
+import org.insset.client.service.ExempleService;
+import org.insset.client.service.ExempleServiceAsync;
+import org.insset.shared.FieldVerifier;
+
+/**
+ *
+ * @author user
+ */
+public class ExemplePresenter extends Composite {
+
+    @UiField
+    public ResetButton boutonClear;
+    @UiField
+    public SubmitButton boutonEnregistrer;
+    @UiField
+    public TextBox nom;
+    @UiField
+    public Label errorLabel;
+
+    /**
+     * The message displayed to the user when the server cannot be reached or
+     * returns an error.
+     */
+    private static final String SERVER_ERROR = &quot;An error occurred while &quot;
+            + &quot;attempting to contact the server. Please check your network &quot;
+            + &quot;connection and try again.&quot;;
+
+    /**
+     * Create a remote service proxy to talk to the server-side Greeting
+     * service.
+     */
+<span class="nc" id="L54">    private final ExempleServiceAsync service = GWT.create(ExempleService.class);</span>
+
+<span class="nc" id="L56">    private final Messages messages = GWT.create(Messages.class);</span>
+
+    interface AddUiBinder extends UiBinder&lt;HTMLPanel, ExemplePresenter&gt; {
+    }
+
+    /**
+     * Create UiBinder for the view
+     */
+<span class="nc" id="L64">    private static AddUiBinder ourUiBinder = GWT.create(AddUiBinder.class);</span>
+
+    /**
+     * Constructeur
+     */
+<span class="nc" id="L69">    public ExemplePresenter() {</span>
+        //bind de la page
+<span class="nc" id="L71">        initWidget(ourUiBinder.createAndBindUi(this));</span>
+<span class="nc" id="L72">        initHandler();</span>
+<span class="nc" id="L73">    }</span>
+
+    /**
+     * Methode qui innitialise les handler pour les cliques sur les boutons
+     */
+    protected void initHandler() {
+<span class="nc" id="L79">        boutonClear.addClickHandler(new ClickHandler() {</span>
+            @Override
+            public void onClick(ClickEvent event) {
+<span class="nc" id="L82">                nom.setText(&quot;&quot;);</span>
+<span class="nc" id="L83">                errorLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L84">            }</span>
+        });
+<span class="nc" id="L86">        boutonEnregistrer.addClickHandler(new ClickHandler() {</span>
+            @Override
+            public void onClick(ClickEvent event) {
+<span class="nc" id="L89">                contacterService();</span>
+<span class="nc" id="L90">            }</span>
+
+        });
+<span class="nc" id="L93">    }</span>
+
+    private void contacterService() {
+<span class="nc" id="L96">        errorLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L97">        final String textToServer = nom.getText();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (!FieldVerifier.isValidName(textToServer)) {</span>
+<span class="nc" id="L99">            errorLabel.addStyleName(&quot;serverResponseLabelError&quot;);</span>
+<span class="nc" id="L100">            errorLabel.setText(&quot;Aucun texte entré!!&quot;);</span>
+<span class="nc" id="L101">            return;</span>
+        }
+<span class="nc" id="L103">        service.inverserChaine(textToServer, new AsyncCallback&lt;String&gt;() {</span>
+            public void onFailure(Throwable caught) {
+                // Show the RPC error message to the user
+<span class="nc" id="L106">                Window.alert(SERVER_ERROR);</span>
+<span class="nc" id="L107">            }</span>
+
+            public void onSuccess(String result) {
+<span class="nc" id="L110">                new DialogBoxInssetPresenter(&quot;Votre nom inversé :&quot;, textToServer, result);</span>
+<span class="nc" id="L111">            }</span>
+        });
+<span class="nc" id="L113">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>
