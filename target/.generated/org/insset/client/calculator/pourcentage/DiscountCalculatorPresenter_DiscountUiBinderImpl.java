@@ -1,4 +1,4 @@
-// .ui.xml template last modified: 1761296495000
+// .ui.xml template last modified: 1761490189000
 package org.insset.client.calculator.pourcentage;
 
 import com.google.gwt.core.client.GWT;
@@ -117,6 +117,7 @@ public class DiscountCalculatorPresenter_DiscountUiBinderImpl implements UiBinde
       f_VerticalPanel2.add(get_f_HorizontalPanel7());
       f_VerticalPanel2.add(get_errorLabel());
       f_VerticalPanel2.add(get_f_VerticalPanel8());
+      f_VerticalPanel2.add(get_f_VerticalPanel15());
       f_VerticalPanel2.setSpacing(8);
 
       return f_VerticalPanel2;
@@ -297,7 +298,9 @@ public class DiscountCalculatorPresenter_DiscountUiBinderImpl implements UiBinde
       // Setup section.
       f_VerticalPanel8.add(get_f_Label9());
       f_VerticalPanel8.add(get_f_HorizontalPanel10());
-      f_VerticalPanel8.add(get_divisionResult());
+      f_VerticalPanel8.add(get_f_HorizontalPanel12());
+      f_VerticalPanel8.add(get_f_HorizontalPanel14());
+      f_VerticalPanel8.add(get_errorLabelOriginal());
       f_VerticalPanel8.setSpacing(8);
 
       return f_VerticalPanel8;
@@ -313,7 +316,7 @@ public class DiscountCalculatorPresenter_DiscountUiBinderImpl implements UiBinde
       // Creation section.
       final com.google.gwt.user.client.ui.Label f_Label9 = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
       // Setup section.
-      f_Label9.setText("Division de deux nombres entiers");
+      f_Label9.setText("Retrouver le prix initial");
 
       return f_Label9;
     }
@@ -329,11 +332,7 @@ public class DiscountCalculatorPresenter_DiscountUiBinderImpl implements UiBinde
       final com.google.gwt.user.client.ui.HorizontalPanel f_HorizontalPanel10 = (com.google.gwt.user.client.ui.HorizontalPanel) GWT.create(com.google.gwt.user.client.ui.HorizontalPanel.class);
       // Setup section.
       f_HorizontalPanel10.add(get_f_Label11());
-      f_HorizontalPanel10.add(get_divA());
-      f_HorizontalPanel10.add(get_f_Label12());
-      f_HorizontalPanel10.add(get_divB());
-      f_HorizontalPanel10.add(get_divideButton());
-      f_HorizontalPanel10.add(get_clearDivisionButton());
+      f_HorizontalPanel10.add(get_finalPrice());
       f_HorizontalPanel10.setSpacing(8);
 
       return f_HorizontalPanel10;
@@ -349,9 +348,209 @@ public class DiscountCalculatorPresenter_DiscountUiBinderImpl implements UiBinde
       // Creation section.
       final com.google.gwt.user.client.ui.Label f_Label11 = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
       // Setup section.
-      f_Label11.setText("A :");
+      f_Label11.setText("Prix final € :");
 
       return f_Label11;
+    }
+
+    /**
+     * Getter for finalPrice called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.TextBox get_finalPrice() {
+      return build_finalPrice();
+    }
+    private com.google.gwt.user.client.ui.TextBox build_finalPrice() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.TextBox finalPrice = (com.google.gwt.user.client.ui.TextBox) GWT.create(com.google.gwt.user.client.ui.TextBox.class);
+      // Setup section.
+
+      this.owner.finalPrice = finalPrice;
+
+      return finalPrice;
+    }
+
+    /**
+     * Getter for f_HorizontalPanel12 called 1 times. Type: DEFAULT. Build precedence: 4.
+     */
+    private com.google.gwt.user.client.ui.HorizontalPanel get_f_HorizontalPanel12() {
+      return build_f_HorizontalPanel12();
+    }
+    private com.google.gwt.user.client.ui.HorizontalPanel build_f_HorizontalPanel12() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.HorizontalPanel f_HorizontalPanel12 = (com.google.gwt.user.client.ui.HorizontalPanel) GWT.create(com.google.gwt.user.client.ui.HorizontalPanel.class);
+      // Setup section.
+      f_HorizontalPanel12.add(get_f_Label13());
+      f_HorizontalPanel12.add(get_reverseDiscountRate());
+      f_HorizontalPanel12.setSpacing(8);
+
+      return f_HorizontalPanel12;
+    }
+
+    /**
+     * Getter for f_Label13 called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.Label get_f_Label13() {
+      return build_f_Label13();
+    }
+    private com.google.gwt.user.client.ui.Label build_f_Label13() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.Label f_Label13 = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
+      // Setup section.
+      f_Label13.setText("Taux (%) :");
+
+      return f_Label13;
+    }
+
+    /**
+     * Getter for reverseDiscountRate called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.TextBox get_reverseDiscountRate() {
+      return build_reverseDiscountRate();
+    }
+    private com.google.gwt.user.client.ui.TextBox build_reverseDiscountRate() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.TextBox reverseDiscountRate = (com.google.gwt.user.client.ui.TextBox) GWT.create(com.google.gwt.user.client.ui.TextBox.class);
+      // Setup section.
+
+      this.owner.reverseDiscountRate = reverseDiscountRate;
+
+      return reverseDiscountRate;
+    }
+
+    /**
+     * Getter for f_HorizontalPanel14 called 1 times. Type: DEFAULT. Build precedence: 4.
+     */
+    private com.google.gwt.user.client.ui.HorizontalPanel get_f_HorizontalPanel14() {
+      return build_f_HorizontalPanel14();
+    }
+    private com.google.gwt.user.client.ui.HorizontalPanel build_f_HorizontalPanel14() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.HorizontalPanel f_HorizontalPanel14 = (com.google.gwt.user.client.ui.HorizontalPanel) GWT.create(com.google.gwt.user.client.ui.HorizontalPanel.class);
+      // Setup section.
+      f_HorizontalPanel14.add(get_calculateOriginalButton());
+      f_HorizontalPanel14.add(get_clearOriginalButton());
+      f_HorizontalPanel14.setSpacing(8);
+
+      return f_HorizontalPanel14;
+    }
+
+    /**
+     * Getter for calculateOriginalButton called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.SubmitButton get_calculateOriginalButton() {
+      return build_calculateOriginalButton();
+    }
+    private com.google.gwt.user.client.ui.SubmitButton build_calculateOriginalButton() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.SubmitButton calculateOriginalButton = (com.google.gwt.user.client.ui.SubmitButton) GWT.create(com.google.gwt.user.client.ui.SubmitButton.class);
+      // Setup section.
+      calculateOriginalButton.setText("Calculer prix initial");
+
+      this.owner.calculateOriginalButton = calculateOriginalButton;
+
+      return calculateOriginalButton;
+    }
+
+    /**
+     * Getter for clearOriginalButton called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.ResetButton get_clearOriginalButton() {
+      return build_clearOriginalButton();
+    }
+    private com.google.gwt.user.client.ui.ResetButton build_clearOriginalButton() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.ResetButton clearOriginalButton = (com.google.gwt.user.client.ui.ResetButton) GWT.create(com.google.gwt.user.client.ui.ResetButton.class);
+      // Setup section.
+      clearOriginalButton.setText("Effacer");
+
+      this.owner.clearOriginalButton = clearOriginalButton;
+
+      return clearOriginalButton;
+    }
+
+    /**
+     * Getter for errorLabelOriginal called 1 times. Type: DEFAULT. Build precedence: 4.
+     */
+    private com.google.gwt.user.client.ui.Label get_errorLabelOriginal() {
+      return build_errorLabelOriginal();
+    }
+    private com.google.gwt.user.client.ui.Label build_errorLabelOriginal() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.Label errorLabelOriginal = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
+      // Setup section.
+
+      this.owner.errorLabelOriginal = errorLabelOriginal;
+
+      return errorLabelOriginal;
+    }
+
+    /**
+     * Getter for f_VerticalPanel15 called 1 times. Type: DEFAULT. Build precedence: 3.
+     */
+    private com.google.gwt.user.client.ui.VerticalPanel get_f_VerticalPanel15() {
+      return build_f_VerticalPanel15();
+    }
+    private com.google.gwt.user.client.ui.VerticalPanel build_f_VerticalPanel15() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.VerticalPanel f_VerticalPanel15 = (com.google.gwt.user.client.ui.VerticalPanel) GWT.create(com.google.gwt.user.client.ui.VerticalPanel.class);
+      // Setup section.
+      f_VerticalPanel15.add(get_f_Label16());
+      f_VerticalPanel15.add(get_f_HorizontalPanel17());
+      f_VerticalPanel15.add(get_divisionResult());
+      f_VerticalPanel15.setSpacing(8);
+
+      return f_VerticalPanel15;
+    }
+
+    /**
+     * Getter for f_Label16 called 1 times. Type: DEFAULT. Build precedence: 4.
+     */
+    private com.google.gwt.user.client.ui.Label get_f_Label16() {
+      return build_f_Label16();
+    }
+    private com.google.gwt.user.client.ui.Label build_f_Label16() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.Label f_Label16 = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
+      // Setup section.
+      f_Label16.setText("Division de deux nombres entiers");
+
+      return f_Label16;
+    }
+
+    /**
+     * Getter for f_HorizontalPanel17 called 1 times. Type: DEFAULT. Build precedence: 4.
+     */
+    private com.google.gwt.user.client.ui.HorizontalPanel get_f_HorizontalPanel17() {
+      return build_f_HorizontalPanel17();
+    }
+    private com.google.gwt.user.client.ui.HorizontalPanel build_f_HorizontalPanel17() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.HorizontalPanel f_HorizontalPanel17 = (com.google.gwt.user.client.ui.HorizontalPanel) GWT.create(com.google.gwt.user.client.ui.HorizontalPanel.class);
+      // Setup section.
+      f_HorizontalPanel17.add(get_f_Label18());
+      f_HorizontalPanel17.add(get_divA());
+      f_HorizontalPanel17.add(get_f_Label19());
+      f_HorizontalPanel17.add(get_divB());
+      f_HorizontalPanel17.add(get_divideButton());
+      f_HorizontalPanel17.add(get_clearDivisionButton());
+      f_HorizontalPanel17.setSpacing(8);
+
+      return f_HorizontalPanel17;
+    }
+
+    /**
+     * Getter for f_Label18 called 1 times. Type: DEFAULT. Build precedence: 5.
+     */
+    private com.google.gwt.user.client.ui.Label get_f_Label18() {
+      return build_f_Label18();
+    }
+    private com.google.gwt.user.client.ui.Label build_f_Label18() {
+      // Creation section.
+      final com.google.gwt.user.client.ui.Label f_Label18 = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
+      // Setup section.
+      f_Label18.setText("A :");
+
+      return f_Label18;
     }
 
     /**
@@ -372,18 +571,18 @@ public class DiscountCalculatorPresenter_DiscountUiBinderImpl implements UiBinde
     }
 
     /**
-     * Getter for f_Label12 called 1 times. Type: DEFAULT. Build precedence: 5.
+     * Getter for f_Label19 called 1 times. Type: DEFAULT. Build precedence: 5.
      */
-    private com.google.gwt.user.client.ui.Label get_f_Label12() {
-      return build_f_Label12();
+    private com.google.gwt.user.client.ui.Label get_f_Label19() {
+      return build_f_Label19();
     }
-    private com.google.gwt.user.client.ui.Label build_f_Label12() {
+    private com.google.gwt.user.client.ui.Label build_f_Label19() {
       // Creation section.
-      final com.google.gwt.user.client.ui.Label f_Label12 = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
+      final com.google.gwt.user.client.ui.Label f_Label19 = (com.google.gwt.user.client.ui.Label) GWT.create(com.google.gwt.user.client.ui.Label.class);
       // Setup section.
-      f_Label12.setText("B :");
+      f_Label19.setText("B :");
 
-      return f_Label12;
+      return f_Label19;
     }
 
     /**

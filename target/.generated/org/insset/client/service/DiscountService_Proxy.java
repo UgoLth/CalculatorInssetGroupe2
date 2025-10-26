@@ -36,6 +36,20 @@ public class DiscountService_Proxy extends RemoteServiceProxy implements org.ins
       callback.onFailure(ex);
     }
   }
+  
+  public void calculateOriginalPrice(java.lang.Double finalPrice, java.lang.Integer discountRate, com.google.gwt.user.client.rpc.AsyncCallback callback) {
+    com.google.gwt.user.client.rpc.impl.RemoteServiceProxy.ServiceHelper helper = new com.google.gwt.user.client.rpc.impl.RemoteServiceProxy.ServiceHelper("DiscountService_Proxy", "calculateOriginalPrice");
+    try {
+      SerializationStreamWriter streamWriter = helper.start(REMOTE_SERVICE_INTERFACE_NAME, 2);
+      streamWriter.writeString("java.lang.Double/858496421");
+      streamWriter.writeString("java.lang.Integer/3438268394");
+      streamWriter.writeObject(finalPrice);
+      streamWriter.writeObject(discountRate);
+      helper.finish(callback, ResponseReader.OBJECT);
+    } catch (SerializationException ex) {
+      callback.onFailure(ex);
+    }
+  }
   @Override
   public SerializationStreamWriter createStreamWriter() {
     ClientSerializationStreamWriter toReturn =

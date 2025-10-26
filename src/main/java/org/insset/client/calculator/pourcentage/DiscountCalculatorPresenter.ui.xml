@@ -20,7 +20,24 @@
       </g:HorizontalPanel>
       
       <g:Label ui:field="errorLabel" />
-      
+
+      <g:VerticalPanel spacing="8">
+        <g:Label text="Retrouver le prix initial" />
+        <g:HorizontalPanel spacing="8">
+          <g:Label text="Prix final € :" />
+          <g:TextBox ui:field="finalPrice" />
+        </g:HorizontalPanel>
+        <g:HorizontalPanel spacing="8">
+          <g:Label text="Taux (%) :" />
+          <g:TextBox ui:field="reverseDiscountRate" />
+        </g:HorizontalPanel>
+        <g:HorizontalPanel spacing="8">
+          <g:SubmitButton ui:field="calculateOriginalButton" text="Calculer prix initial" />
+          <g:ResetButton ui:field="clearOriginalButton" text="Effacer" />
+        </g:HorizontalPanel>
+        <g:Label ui:field="errorLabelOriginal" />
+      </g:VerticalPanel>
+
       <g:VerticalPanel spacing="8">
         <g:Label text="Division de deux nombres entiers" />
 
