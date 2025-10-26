@@ -7,7 +7,7 @@ calculatorInsset,org.insset.client.message.dialogbox,DialogBoxInssetPresenter,79
 calculatorInsset,org.insset.client.message.dialogbox,DialogBoxInssetPresenter.new ClickHandler() {...},10,0,0,0,3,0,2,0,2,0
 calculatorInsset,org.insset.client,calculatorInsset,17,0,2,0,7,0,3,0,2,0
 calculatorInsset,org.insset.client,HistoryListener,43,0,6,0,11,0,5,0,2,0
-calculatorInsset,org.insset.server,DiscountServiceImpl,56,0,10,0,8,0,7,0,2,0
+calculatorInsset,org.insset.server,DiscountServiceImpl,0,98,4,16,0,15,4,9,0,3
 calculatorInsset,org.insset.server,RomanConverterServiceImpl,33,427,12,26,6,48,12,13,0,6
 calculatorInsset,org.insset.server,ExempleServiceImpl,32,0,2,0,6,0,3,0,2,0
 calculatorInsset,org.insset.client.calculator.roman,CalculatorRomainPresenter,169,0,6,0,41,0,10,0,7,0
@@ -23,10 +23,13 @@ calculatorInsset,org.insset.client.calculator.pourcentage,DiscountCalculatorPres
 calculatorInsset,org.insset.client.calculator.pourcentage,DiscountCalculatorPresenter.new ClickHandler() {...},22,0,0,0,5,0,2,0,2,0
 calculatorInsset,org.insset.client.calculator.pourcentage,DiscountCalculatorPresenter.new ClickHandler() {...},10,0,0,0,3,0,2,0,2,0
 calculatorInsset,org.insset.client.calculator.pourcentage,DiscountCalculatorPresenter.new AsyncCallback() {...},89,0,0,0,12,0,3,0,3,0
-calculatorInsset,org.insset.client.calculator.pourcentage,DiscountCalculatorPresenter,259,0,8,0,65,0,10,0,6,0
+calculatorInsset,org.insset.client.calculator.pourcentage,DiscountCalculatorPresenter.new ClickHandler() {...},27,0,0,0,6,0,2,0,2,0
+calculatorInsset,org.insset.client.calculator.pourcentage,DiscountCalculatorPresenter.new ClickHandler() {...},10,0,0,0,3,0,2,0,2,0
+calculatorInsset,org.insset.client.calculator.pourcentage,DiscountCalculatorPresenter,390,0,28,0,100,0,21,0,7,0
+calculatorInsset,org.insset.client.calculator.pourcentage,DiscountCalculatorPresenter.new AsyncCallback() {...},71,0,2,0,11,0,4,0,3,0
 calculatorInsset,org.insset.client.exemple,ExemplePresenter,73,0,2,0,18,0,5,0,4,0
 calculatorInsset,org.insset.client.exemple,ExemplePresenter.new ClickHandler() {...},10,0,0,0,3,0,2,0,2,0
 calculatorInsset,org.insset.client.exemple,ExemplePresenter.new ClickHandler() {...},17,0,0,0,4,0,2,0,2,0
 calculatorInsset,org.insset.client.exemple,ExemplePresenter.new AsyncCallback() {...},21,0,0,0,5,0,3,0,3,0
-calculatorInsset,org.insset.shared,MathUtils,16,0,2,0,4,0,3,0,2,0
+calculatorInsset,org.insset.shared,MathUtils,3,13,0,2,1,3,1,2,1,1
 calculatorInsset,org.insset.shared,FieldVerifier,75,179,58,44,20,31,48,8,3,2

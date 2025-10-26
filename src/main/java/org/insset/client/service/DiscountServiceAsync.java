@@ -10,4 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface DiscountServiceAsync {
     void calculateDiscount(Double originalPrice, Integer discountRate,
                            AsyncCallback<Double[]> callback);
+
+    void calculateOriginalPrice(Double finalPrice, Integer discountRate,
+                                AsyncCallback<Double> callback);
 }

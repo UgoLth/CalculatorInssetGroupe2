@@ -38,6 +38,13 @@ public class DiscountCalculatorPresenter extends Composite {
     @UiField
     public Label errorLabel;
     
+    // Champs pour calcul inverse (prix initial)
+    @UiField public TextBox finalPrice;
+    @UiField public TextBox reverseDiscountRate;
+    @UiField public SubmitButton calculateOriginalButton;
+    @UiField public ResetButton clearOriginalButton;
+    @UiField public Label errorLabelOriginal;
+    
     @UiField public TextBox divA;
     @UiField public TextBox divB;
     @UiField public SubmitButton divideButton;
@@ -60,6 +67,12 @@ public class DiscountCalculatorPresenter extends Composite {
     private void initPlaceholders() {
     originalPrice.getElement().setPropertyString("placeholder", "Prix original (€)");
     discountRate.getElement().setPropertyString("placeholder", "Taux de remise (%)");
+    if (finalPrice != null) {
+        finalPrice.getElement().setPropertyString("placeholder", "Prix final €\n");
+    }
+    if (reverseDiscountRate != null) {
+        reverseDiscountRate.getElement().setPropertyString("placeholder", "Taux de remise (%)");
+    }
     
     divA.getElement().setPropertyString("placeholder", "Premier entier");
     divB.getElement().setPropertyString("placeholder", "Deuxième entier");
@@ -90,6 +103,26 @@ public class DiscountCalculatorPresenter extends Composite {
                 calculateDiscount();
             }
         });
+        
+        if (clearOriginalButton != null) {
+            clearOriginalButton.addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    finalPrice.setText("");
+                    reverseDiscountRate.setText("");
+                    errorLabelOriginal.setText("");
+                    errorLabelOriginal.removeStyleName("serverResponseLabelError");
+                }
+            });
+        }
+        if (calculateOriginalButton != null) {
+            calculateOriginalButton.addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    calculateOriginal();
+                }
+            });
+        }
         
          divideButton.addClickHandler(new ClickHandler() {
             @Override
@@ -149,6 +182,68 @@ public class DiscountCalculatorPresenter extends Composite {
             }
         });
     }
+
+    private void calculateOriginal() {
+
+        if (errorLabelOriginal != null) {
+            errorLabelOriginal.setText("");
+            errorLabelOriginal.removeStyleName("serverResponseLabelError");
+        }
+
+        Double fPrice = null;
+        try {
+            fPrice = Double.parseDouble(finalPrice.getText());
+            if (fPrice <= 0) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e) {
+            if (errorLabelOriginal != null) {
+                errorLabelOriginal.addStyleName("serverResponseLabelError");
+                errorLabelOriginal.setText("Prix final invalide (doit etre > 0)");
+            }
+            return;
+        }
+
+        Integer rate = null;
+        try {
+            rate = Integer.parseInt(reverseDiscountRate.getText());
+            if (rate < 0 || rate >= 100) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e) {
+            if (errorLabelOriginal != null) {
+                errorLabelOriginal.addStyleName("serverResponseLabelError");
+                errorLabelOriginal.setText("Taux invalide (0-99%)");
+            }
+            return;
+        }
+
+        final Double finalVal = fPrice;
+        final Integer rateVal = rate;
+
+        service.calculateOriginalPrice(finalVal, rateVal, new AsyncCallback<Double>() {
+            public void onFailure(Throwable caught) {
+                if (errorLabelOriginal != null) {
+                    errorLabelOriginal.addStyleName("serverResponseLabelError");
+                    errorLabelOriginal.setText("Erreur serveur: " + caught.getMessage());
+                }
+            }
+            public void onSuccess(Double original) {
+                NumberFormat money = NumberFormat.getFormat("0.00");
+                String message =
+                    "Prix final: " + money.format(finalVal) + "€\n" +
+                    "Taux remise: " + rateVal + "%\n" +
+                    "Prix initial: " + money.format(original) + "€\n";
+
+                new DialogBoxInssetPresenter(
+                    "Prix initial",
+                    "Retrouver le prix initial",
+                    message
+                );
+            }
+        });
+    }
+
     private void calculateDivision() {
 
         divisionResult.setText("");
